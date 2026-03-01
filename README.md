@@ -58,4 +58,4 @@ LRU   : <number_of_misses>
 OPTFF : <number_of_misses>
 
 ## Written Component
-[Link Text] (https://github.com/aarithi123/COP4533_Programming_Assignment_2/blob/main/Q%26A%20Assignment%202.pdf)
+https://github.com/aarithi123/COP4533_Programming_Assignment_2/blob/main/Q%26A%20Assignment%202.pdf
