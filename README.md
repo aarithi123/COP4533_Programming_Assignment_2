@@ -26,10 +26,11 @@ From the src directory:
 python3 cache_eviction_policy.py ../data/example.in
 
 ## Expected output:  
+```
 FIFO  : <number_of_misses>  
 LRU   : <number_of_misses>  
 OPTFF : <number_of_misses>
-
+```
 You can run the three nontrivial inputs used in the written component:  
 python3 cache_eviction_policy.py ../data/nontrivial_file1.in  
 python3 cache_eviction_policy.py ../data/nontrivial_file2.in  
