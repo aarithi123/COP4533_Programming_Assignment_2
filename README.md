@@ -30,16 +30,16 @@ FIFO  : <number_of_misses>
 LRU   : <number_of_misses>  
 OPTFF : <number_of_misses>
 
-You can run the three nontrivial inputs used in the written component:
-python3 cache_eviction_policy.py ../data/nontrivial_file1.in
-python3 cache_eviction_policy.py ../data/nontrivial_file2.in
+You can run the three nontrivial inputs used in the written component:  
+python3 cache_eviction_policy.py ../data/nontrivial_file1.in  
+python3 cache_eviction_policy.py ../data/nontrivial_file2.in  
 python3 cache_eviction_policy.py ../data/nontrivial_file3.in
-
+```
 Each run prints:  
 FIFO  : <number_of_misses>  
 LRU   : <number_of_misses>  
 OPTFF : <number_of_misses>
-
+```
 ## Input Format
 Each input file must have:
 k m
@@ -51,10 +51,11 @@ m — number of requests
 r1 .. rm — sequence of integer IDs (space-separated; may span multiple lines after the first).
 
 ## Output Format
+```
 The program prints:  
 FIFO  : <number_of_misses>  
 LRU   : <number_of_misses>  
 OPTFF : <number_of_misses>
-
+```
 ## Written Component
 https://github.com/aarithi123/COP4533_Programming_Assignment_2/blob/main/Q%26A%20Assignment%202.pdf
