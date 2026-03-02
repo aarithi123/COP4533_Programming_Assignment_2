@@ -13,7 +13,6 @@
     ├── nontrivial_file2.in
     ├── nontrivial_file3.in
     ├── example.in
-    └── example.out
 ```
 
 ## Requirements
