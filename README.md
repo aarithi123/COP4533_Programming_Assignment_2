@@ -22,7 +22,7 @@ Python 3.11.6 (or compatible 3.11.x)
 No compilation is needed for the Python code.
 
 ## Running the Program
-example command: python cache_eviction_policy.py <input_file> <output_file>  
+example command: python3 cache_eviction_policy.py <input_file> <output_file>  
 From the src directory:
 python3 cache_eviction_policy.py ../data/example.in ../data/example.out
 
