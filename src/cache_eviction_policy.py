@@ -1,6 +1,7 @@
 import sys
 from collections import deque, defaultdict, OrderedDict
 
+# read input file and return k and list of requests
 def read_input(filename):
     with open(filename, "r") as f:
         tokens = f.read().split()
@@ -21,15 +22,16 @@ def read_input(filename):
         raise ValueError("Expected {} requests, got {}".format(m, len(request_tokens)))
 
     requests = []
-    for t in request_tokens:
-        requests.append(int(t))
+    for i in request_tokens:
+        requests.append(int(i))
 
     return k, requests
 
-
+# FIFO: evict the item that was inserted earliest (first in)
 def count_misses_fifo(k, requests):
-    cache_items = set()    # fast membership check
-    fifo_line = deque()    # keeps insertion order
+    cache_items = set()    
+    # insertion order
+    fifo_line = deque()
     misses = 0
 
     for item in requests:
@@ -49,42 +51,40 @@ def count_misses_fifo(k, requests):
 
     return misses
 
+# LRU: evict the item that was used least recently (not necessarily the oldest)
 def count_misses_lru(k, requests):
     cache = OrderedDict()
     misses = 0
 
     for item in requests:
         if item in cache:
-            # hit: move to most recent (right end)
+            # hit
             cache.move_to_end(item)
         else:
             # miss
             misses += 1
 
             if len(cache) == k:
-                # remove least recent (left end)
                 cache.popitem(last=False)
 
-            # insert as most recent
             cache[item] = True
 
     return misses
 
 def build_future_positions(requests):
     future = defaultdict(deque)
-    for idx, item in enumerate(requests):
-        future[item].append(idx)
+    for i, item in enumerate(requests):
+        future[item].append(i)
     return future
 
-
+# OPTFF: evict the item that will be used farthest in the future (or never again)
 def count_misses_optff(k, requests):
     future = build_future_positions(requests)
 
     cache_items = set()
     misses = 0
 
-    for idx, item in enumerate(requests):
-        # We are using this occurrence now, so remove it from future[item]
+    for i, item in enumerate(requests):
         future[item].popleft()
 
         if item in cache_items:
@@ -97,15 +97,15 @@ def count_misses_optff(k, requests):
         if len(cache_items) < k:
             cache_items.add(item)
         else:
-            # choose victim: farthest next use (or never used again)
+            # choose next victim to evict
             victim = None
-            victim_next = -1  # bigger means "farther in future"
+            victim_next = -1
 
             for cached_item in cache_items:
                 if len(future[cached_item]) == 0:
-                    next_use = float("inf")  # never again
+                    next_use = float("inf")
                 else:
-                    next_use = future[cached_item][0]  # next index it appears
+                    next_use = future[cached_item][0]
 
                 if victim is None or next_use > victim_next:
                     victim = cached_item
@@ -132,7 +132,7 @@ def main():
     lru = count_misses_lru(k, requests)
     optff = count_misses_optff(k, requests)
 
-    # aligned like the screenshot
+    # print the expected output format
     print("{:<5} : {}".format("FIFO", fifo))
     print("{:<5} : {}".format("LRU", lru))
     print("{:<5} : {}".format("OPTFF", optff))
