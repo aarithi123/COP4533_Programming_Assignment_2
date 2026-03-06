@@ -33,11 +33,11 @@ LRU   : <number_of_misses>
 OPTFF : <number_of_misses>
 ```
 You can run the three nontrivial inputs used in the written component:  
-python3 cache_eviction_policy.py ../data/nontrivial_file1.in  
-python3 cache_eviction_policy.py ../data/nontrivial_file2.in  
-python3 cache_eviction_policy.py ../data/nontrivial_file3.in
+python3 cache_eviction_policy.py ../data/nontrivial_file1.in ../data/nontrivial_file1.out  
+python3 cache_eviction_policy.py ../data/nontrivial_file2.in ../data/nontrivial_file2.out  
+python3 cache_eviction_policy.py ../data/nontrivial_file3.in ../data/nontrivial_file3.out  
 ```
-Each run prints:  
+Each run prints and writes to an output file:  
 FIFO  : <number_of_misses>  
 LRU   : <number_of_misses>  
 OPTFF : <number_of_misses>
@@ -54,7 +54,7 @@ r1 .. rm — sequence of integer IDs (space-separated; may span multiple lines a
 
 ## Output Format
 ```
-The program prints:  
+The program prints and writes to an output file:  
 FIFO  : <number_of_misses>  
 LRU   : <number_of_misses>  
 OPTFF : <number_of_misses>
