@@ -1,6 +1,7 @@
 import sys
 from collections import deque, defaultdict, OrderedDict
 
+
 # read input file and return k and list of requests
 def read_input(filename):
     with open(filename, "r") as f:
@@ -27,19 +28,17 @@ def read_input(filename):
 
     return k, requests
 
-# FIFO: evict the item that was inserted earliest (first in)
+
+# FIFO: evict the item that was inserted earliest
 def count_misses_fifo(k, requests):
-    cache_items = set()    
-    # insertion order
+    cache_items = set()
     fifo_line = deque()
     misses = 0
 
     for item in requests:
         if item in cache_items:
-            # hit
             continue
 
-        # miss
         misses += 1
 
         if len(cache_items) == k:
@@ -51,17 +50,16 @@ def count_misses_fifo(k, requests):
 
     return misses
 
-# LRU: evict the item that was used least recently (not necessarily the oldest)
+
+# LRU: evict the item used least recently
 def count_misses_lru(k, requests):
     cache = OrderedDict()
     misses = 0
 
     for item in requests:
         if item in cache:
-            # hit
             cache.move_to_end(item)
         else:
-            # miss
             misses += 1
 
             if len(cache) == k:
@@ -71,13 +69,17 @@ def count_misses_lru(k, requests):
 
     return misses
 
+
 def build_future_positions(requests):
     future = defaultdict(deque)
+
     for i, item in enumerate(requests):
         future[item].append(i)
+
     return future
 
-# OPTFF: evict the item that will be used farthest in the future (or never again)
+
+# OPTFF: evict item used farthest in the future
 def count_misses_optff(k, requests):
     future = build_future_positions(requests)
 
@@ -88,20 +90,19 @@ def count_misses_optff(k, requests):
         future[item].popleft()
 
         if item in cache_items:
-            # hit
             continue
 
-        # miss
         misses += 1
 
         if len(cache_items) < k:
             cache_items.add(item)
+
         else:
-            # choose next victim to evict
             victim = None
             victim_next = -1
 
             for cached_item in cache_items:
+
                 if len(future[cached_item]) == 0:
                     next_use = float("inf")
                 else:
@@ -118,12 +119,16 @@ def count_misses_optff(k, requests):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python cache_eviction_policy.py <input_file>", file=sys.stderr)
+    if len(sys.argv) != 3:
+        print("Usage: python cache_eviction_policy.py <input_file> <output_file>", file=sys.stderr)
         sys.exit(1)
 
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+
     try:
-        k, requests = read_input(sys.argv[1])
+        k, requests = read_input(input_file)
+
     except Exception as e:
         print("Error: {}".format(e), file=sys.stderr)
         sys.exit(1)
@@ -132,10 +137,17 @@ def main():
     lru = count_misses_lru(k, requests)
     optff = count_misses_optff(k, requests)
 
-    # print the expected output format
-    print("{:<5} : {}".format("FIFO", fifo))
-    print("{:<5} : {}".format("LRU", lru))
-    print("{:<5} : {}".format("OPTFF", optff))
+    lines = []
+    lines.append("{:<5} : {}".format("FIFO", fifo))
+    lines.append("{:<5} : {}".format("LRU", lru))
+    lines.append("{:<5} : {}".format("OPTFF", optff))
+    output_text = "\n".join(lines)
+
+    print(output_text, end="")
+
+    # write output to file
+    with open(output_file, "w") as f:
+        f.write(output_text)
 
 
 if __name__ == "__main__":
