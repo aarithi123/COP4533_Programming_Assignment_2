@@ -59,5 +59,9 @@ FIFO  : <number_of_misses>
 LRU   : <number_of_misses>  
 OPTFF : <number_of_misses>
 ```
+
+## Clone the Project
+git clone https://github.com/aarithi123/COP4533_Programming_Assignment_2.git  
+
 ## Written Component
 https://github.com/aarithi123/COP4533_Programming_Assignment_2/blob/main/Q%26A%20Assignment%202.pdf
